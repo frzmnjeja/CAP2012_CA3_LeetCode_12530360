@@ -1,23 +1,56 @@
 #include <iostream>
+#include <vector>
 using namespace std;
 
 class Solution {
 public:
-    int numberOfSteps(int num) {
-        int steps = 0;
+    int search(vector<int>& nums, int target) {
 
-        while (num > 0) {
-            if (num % 2 == 0) {
-                num = num / 2;
-            } 
-            else {
-                num = num - 1;
+        int left = 0;
+        int right = nums.size() - 1;
+
+        while (left <= right) {
+
+            int mid = left + (right - left) / 2;
+
+            if (nums[mid] == target) {
+                return mid;
             }
-
-            steps++;
+            else if (nums[mid] < target) {
+                left = mid + 1;
+            }
+            else {
+                right = mid - 1;
+            }
         }
 
-        return steps;
+        return -1;
     }
 };
+
+int main() {
+
+    int n;
+    cout << "Enter number of elements: ";
+    cin >> n;
+
+    vector<int> nums(n);
+
+    cout << "Enter sorted elements: ";
+    for (int i = 0; i < n; i++) {
+        cin >> nums[i];
+    }
+
+    int target;
+    cout << "Enter target: ";
+    cin >> target;
+
+    Solution obj;
+
+    int result = obj.search(nums, target);
+
+    cout << "Target index: " << result << endl;
+
+    return 0;
+}
 
